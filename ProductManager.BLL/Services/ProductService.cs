@@ -20,13 +20,13 @@ public class ProductService : IProductService
     {
         var query = _context.Products.AsQueryable();
 
-        // Apply search filter
+
         if (!string.IsNullOrEmpty(searchQuery))
         {
             query = query.Where(p => p.Name.Contains(searchQuery) || p.Description.Contains(searchQuery));
         }
 
-        // Apply pagination
+
         query = query.Skip((pageNumber - 1) * pageSize).Take(pageSize);
 
         return await query.ToListAsync();
@@ -37,15 +37,11 @@ public class ProductService : IProductService
         return await _context.Products.FindAsync(id);
     }
 
-    //public async Task AddProductAsync(Product product)
-    //{
-    //    _context.Products.Add(product);
-    //    await _context.SaveChangesAsync();
-    //}
+
 
     public async Task AddProductAsync(Product product)
     {
-        // Validate the product
+
         var validator = new ProductValidator();
         var validationResult = await validator.ValidateAsync(product);
 
@@ -54,7 +50,7 @@ public class ProductService : IProductService
             throw new ValidationException("One of More Product field is not valid! Check it and try again");
         }
 
-        // Add the product
+
         _context.Products.Add(product);
         await _context.SaveChangesAsync();
     }

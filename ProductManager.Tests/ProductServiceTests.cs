@@ -21,7 +21,7 @@ namespace ProductManager.Tests
         [Fact]
         public async Task AddProduct_ShouldAddProductSuccessfully()
         {
-            // Arrange
+
             var dbContext = GetInMemoryDbContext();
             var productService = new ProductService(dbContext);
             var product = new Product
@@ -32,11 +32,10 @@ namespace ProductManager.Tests
                 Stock = 5
             };
 
-            // Act
             await productService.AddProductAsync(product);
             var products = await dbContext.Products.ToListAsync();
 
-            // Assert
+
             Assert.Single(products);
             Assert.Equal("Test Product", products.First().Name);
         }
@@ -44,7 +43,7 @@ namespace ProductManager.Tests
         [Fact]
         public async Task GetAllProducts_ShouldReturnProducts()
         {
-            // Arrange
+
             var dbContext = GetInMemoryDbContext();
             dbContext.Products.Add(new Product { Name = "Product 1", Description = "Desc 1", Price = 5.0m, Stock = 10 });
             dbContext.Products.Add(new Product { Name = "Product 2", Description = "Desc 2", Price = 15.0m, Stock = 20 });
@@ -52,17 +51,17 @@ namespace ProductManager.Tests
 
             var productService = new ProductService(dbContext);
 
-            // Act
+
             var products = await productService.GetAllProductsAsync(null, 1, 10);
 
-            // Assert
+
             Assert.Equal(2, products.Count());
         }
 
         [Fact]
         public async Task GetAllProducts_WithSearchQuery_ShouldReturnFilteredResults()
         {
-            // Arrange
+
             var dbContext = GetInMemoryDbContext();
             dbContext.Products.Add(new Product { Name = "Laptop", Description = "High-end Laptop", Price = 1500, Stock = 5 });
             dbContext.Products.Add(new Product { Name = "Mouse", Description = "Wireless Mouse", Price = 20, Stock = 50 });
@@ -70,10 +69,10 @@ namespace ProductManager.Tests
 
             var productService = new ProductService(dbContext);
 
-            // Act
+
             var filteredProducts = await productService.GetAllProductsAsync("Laptop", 1, 10);
 
-            // Assert
+
             Assert.Single(filteredProducts);
             Assert.Equal("Laptop", filteredProducts.First().Name);
         }

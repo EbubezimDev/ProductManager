@@ -34,12 +34,7 @@ public class ProductsController : ControllerBase
         return Ok(product);
     }
 
-    //[HttpPost]
-    //public async Task<IActionResult> AddProduct(Product product)
-    //{
-    //    await _productService.AddProductAsync(product);
-    //    return CreatedAtAction(nameof(GetProductById), new { id = product.Id }, product);
-    //}
+
 
     [HttpPost]
     public async Task<IActionResult> AddProduct(Product product)
